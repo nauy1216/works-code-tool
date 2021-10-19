@@ -51,6 +51,7 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
+// 创建窗口
 const createWindow = async () => {
   if (
     process.env.NODE_ENV === 'development' ||
@@ -68,13 +69,14 @@ const createWindow = async () => {
   };
 
   mainWindow = new BrowserWindow({
-    show: false,
+    show: false, // 创建窗口但是不展示
     width: 1024,
     height: 728,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
+      preload: path.join(__dirname, './electron/preload.js'),
     },
   });
 
@@ -113,7 +115,7 @@ const createWindow = async () => {
 };
 
 /**
- * Add event listeners...
+ * 当关闭所有窗口时
  */
 
 app.on('window-all-closed', () => {
@@ -124,9 +126,18 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.whenReady().then(createWindow).catch(console.log);
+/**
+ * app准备好后创建一个窗口
+ */
+app
+  .whenReady()
+  .then(() => {
+    return createWindow();
+  })
+  .catch(console.log);
 
 app.on('activate', () => {
+  // 兼容macOS
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();

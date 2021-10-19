@@ -272,6 +272,7 @@ export default merge(baseConfig, {
     },
     before() {
       console.log('Starting Main Process...');
+        // 先启动主线程
         spawn('npm', ['run', 'start:main'], {
           shell: true,
           env: process.env,

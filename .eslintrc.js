@@ -22,5 +22,6 @@ module.exports = {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
+    'eslint@typescript-eslint/no-explicit-any': [0],
   },
 };
