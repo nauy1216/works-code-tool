@@ -19,9 +19,15 @@ if (
   require('electron-debug')();
 }
 
-/**
- * 当关闭所有窗口时
- */
+// app准备好后创建一个窗口
+app
+  .whenReady()
+  .then(() => {
+    return createWindow();
+  })
+  .catch(console.log);
+
+// 当关闭所有窗口时
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
@@ -30,21 +36,9 @@ app.on('window-all-closed', () => {
   }
 });
 
-/**
- * app准备好后创建一个窗口
- */
-app
-  .whenReady()
-  .then(() => {
-    return createWindow();
-  })
-  .catch(console.log);
-
-/**
- * 兼容macOS
- * On macOS it's common to re-create a window in the app when the
- * dock icon is clicked and there are no other windows open.
- */
+// 兼容macOS
+// On macOS it's common to re-create a window in the app when the
+// dock icon is clicked and there are no other windows open.
 app.on('activate', () => {
   if (getMainWindow() === null) createWindow();
 });

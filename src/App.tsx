@@ -1,13 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.global.css';
-import Home from './pages/home';
+import { routes } from './pages/routes';
 
 export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Home} />
+        {routes.map(({ path, component }) => (
+          <Route key={path} path={path} component={component} />
+        ))}
       </Switch>
     </Router>
   );
