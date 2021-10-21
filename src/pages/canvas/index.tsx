@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import LogicFlow from '@logicflow/core';
 import '@logicflow/core/dist/style/index.css';
+import { Pane } from './components/pane';
+import style from './index.scss';
 
 const initialData = {
   // 节点
@@ -37,7 +39,7 @@ export default function Hello(props: Props) {
   useEffect(() => {
     const lf = new LogicFlow({
       // 容器配置
-      container: document.querySelector('#container')!,
+      container: document.querySelector('#logic-flow-container')!,
       // 画布配置
       width: 1000,
       height: 1000,
@@ -65,11 +67,12 @@ export default function Hello(props: Props) {
   });
 
   return (
-    <div
-      style={{
-        height: '100vh',
-      }}
-      id="container"
-    />
+    <div className={style.canvas}>
+      <Pane />
+      <div
+        className={style['logic-flow-container']}
+        id="logic-flow-container"
+      />
+    </div>
   );
 }
